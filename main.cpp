@@ -27,12 +27,13 @@ int CACHE_DATOS_N1[4][6];//Bloques de 4 numeros + Etiqueta y Estado
     
     int IR[4];//Siguiente Instrucción
     
-int *posMemoriaACaché(int nucleo,int pos){
+int posMemoriaACache(int nucleo,int pos){
 
+    return 0;
 };
 
 int posCacheAMemoria(int nucleo,int pos){
-
+    return 0;
 };
 
 struct estadoHilo {
@@ -126,7 +127,7 @@ void JR(int nucleo, int X){};
 void LW(int nucleo, int X, int Y, int num){};
 
 void SiguienteInstruccion(int pos){
-    IR[0]=posicionCacheInstrucciones(pos);
+    IR[0]=pos;
     IR[2]=pos+1;
        IR[3]=pos+2;
           IR[4]=pos+3;
