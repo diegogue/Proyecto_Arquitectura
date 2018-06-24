@@ -10,29 +10,29 @@
 
 #include "pthread.h"
 
-
 using namespace std;
 //int MEM_INSTRUCCIONES[40][4];
-int MEM_INSTRUCCIONES[40][16];
-int MEM_DATOS[24][4];
+int MEM_INSTRUCCIONES[40][16];//40 Bloques de 4 instrucciones con 4 numeros cada uno
+int MEM_DATOS[24][4]; //24 Bloques de 4 numeros cada uno
 
-int CACHE_INSTRUCCIONES_N0[16][9];//Bloques de 4 instrucciones + Etiqueta
-int CACHE_INSTRUCCIONES_N1[16][5];//Bloques de 4 instrucciones + Etiqueta
+int CACHE_INSTRUCCIONES_N0[16][9];//4 Bloques de 4 instrucciones + Etiqueta
+int CACHE_INSTRUCCIONES_N1[16][5];//4 Bloques de 4 instrucciones + Etiqueta
 
 int CACHE_DATOS_N0[8][6];//Bloques de 4 numeros + Etiqueta y Estado
 int CACHE_DATOS_N1[4][6];//Bloques de 4 numeros + Etiqueta y Estado
 
 //Pila de hilillos
-    stack<Hilillo> M_PilaHilillos;
-    
-    int IR[4];//Siguiente Instrucción
-    
-int posMemoriaACache(int nucleo,int pos){
+stack<Hilillo> M_PilaHilillos;
 
+int IR[4];//Siguiente Instrucción
+
+pthread_t NUCLEO0, NUCLEO1; //Un hilo para cada núcleo
+ 
+int posMemoriaACache(int nucleo,int pos){
     return 0;
 };
 
-int posCacheAMemoria(int nucleo,int pos){
+int posCacheAMemoria(int nucleo,int posBloque){
     return 0;
 };
 
@@ -134,7 +134,8 @@ void SiguienteInstruccion(int pos){
 }
 
 void* correrHilillos(void*){
-    cout << "Hilo";
+    cout << "Hilo" ;
+    
     //leer instruccion
     //ejecutar
     
@@ -185,12 +186,13 @@ int main() {
     }
     */
 
- pthread_t NUCLEO0, NUCLEO1; //Un hilo para cada núcleo
 
-    pthread_create(&NUCLEO0, NULL, &correrHilillos, NULL);
-    pthread_create(&NUCLEO1, NULL, &correrHilillos, NULL);
+
+   pthread_create(&NUCLEO0, NULL, &correrHilillos, NULL);
+   pthread_create(&NUCLEO1, NULL, &correrHilillos, NULL);
+    
     pthread_join(NUCLEO0, NULL);   
-pthread_join(NUCLEO1, NULL); 
+    pthread_join(NUCLEO1, NULL); 
     return 0;
     
 }
