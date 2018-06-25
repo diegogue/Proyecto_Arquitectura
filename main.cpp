@@ -28,13 +28,73 @@ int IR[4];//Siguiente Instrucción
 
 pthread_t NUCLEO0, NUCLEO1; //Un hilo para cada núcleo
  
-int posMemoriaACache(int nucleo,int pos){
-    return 0;
+//Copiar un bloque de memoria a la Cache de datos
+void posMemoriaACacheDatos(int nucleo,int Bloque){
+    int bloqueMem = 24 % Bloque;
+    
+    if(nucleo == 0){
+        for(int i=0; i>4; i++){
+            CACHE_DATOS_N0[Bloque][i]= MEM_DATOS[bloqueMem][i];
+        }
+            CACHE_DATOS_N0[Bloque][5]= Bloque;//Cambia etiqueta
+    }else{
+             for(int i=0; i>4; i++){
+            CACHE_DATOS_N1[Bloque][i]= MEM_DATOS[bloqueMem][i];
+        }
+            CACHE_DATOS_N1[Bloque][5]= Bloque;//Cambia etiqueta
+    }
 };
 
-int posCacheAMemoria(int nucleo,int posBloque){
-    return 0;
+//Copiar un bloque de la Cache de datos a Memoria
+void posCacheAMemDatos(int nucleo,int Bloque){
+    int bloque = Bloque % 4;
+    
+    if(nucleo == 0){
+        for(int i=0; i>4; i++){
+            MEM_DATOS[Bloque][i]= CACHE_DATOS_N0[Bloque][i];
+        }
+    }else{
+             for(int i=0; i>4; i++){
+            MEM_DATOS[Bloque][i]= CACHE_DATOS_N1[Bloque][i];
+        }
+    }
 };
+
+//Copiar un bloque de memoria a la Cache de Instrucciones
+void posMemoriaACacheInstrucciones(int nucleo,int BloqueMem){
+    int bloqueCache = BloqueMem % 4;
+    
+    if(nucleo == 0){
+        for(int i=0; i>4; i++){
+            CACHE_INSTRUCCIONES_N0[bloqueCache][i]= MEM_INSTRUCCIONES[BloqueMem][i];
+        }
+    }else{
+             for(int i=0; i>4; i++){
+            CACHE_DATOS_N1[bloqueCache][i]= MEM_DATOS[BloqueMem][i];
+        }
+    }
+};
+
+int getDatoCache(int nucleo, int bloque, int palabra){
+    
+    if(nucleo = 0){return CACHE_DATOS_N0[bloque][palabra];}
+    else{
+    return CACHE_DATOS_N1[bloque][palabra];
+    }
+    
+    /*Para calcular palabra en memoria
+    int Bloque = direccion/16;
+    int Palabra = (direccion%16)/4;
+    int PosCache= Bloque % 4;*/
+};
+
+void setDatoCache(int nucleo, int bloque, int palabra, int nuevo){
+       if(nucleo = 0){CACHE_DATOS_N0[bloque][palabra] = nuevo;}
+    else{
+    CACHE_DATOS_N1[bloque][palabra] = nuevo;
+    }  
+};
+
 
 struct estadoHilo {
   int ID;
@@ -44,9 +104,9 @@ struct estadoHilo {
   int estado=0;
 };
 
-int indiceInstrucciones=0;//Para guardar en la mem de Instrucciones
 
 //Leer archivos de texto y convierte los numeros a enteros
+int indiceInstrucciones=0;//Para guardar en la mem de Instrucciones
 void leerArchivo(string nombre){
     ifstream file(nombre);
     string temp;
@@ -185,14 +245,10 @@ int main() {
         }  
     }
     */
-
-
-
    pthread_create(&NUCLEO0, NULL, &correrHilillos, NULL);
    pthread_create(&NUCLEO1, NULL, &correrHilillos, NULL);
     
     pthread_join(NUCLEO0, NULL);   
     pthread_join(NUCLEO1, NULL); 
     return 0;
-    
 }
