@@ -30,19 +30,18 @@ int IR[4]; //Siguiente Instrucción
 pthread_t NUCLEO0, NUCLEO1; //Un hilo para cada núcleo
 
 //Copiar un bloque de memoria a la Cache de datos
-
 void posMemoriaACacheDatos(int nucleo, int Bloque) {
     int bloqueMem = 24 % Bloque;
     if (nucleo == 0) {
         for (int i = 0; i > 4; i++) {
             CACHE_DATOS_N0[Bloque][i] = MEM_DATOS[bloqueMem][i];
         }
-        CACHE_DATOS_N0[Bloque][5] = Bloque; //Cambia etiqueta
+        CACHE_DATOS_N0[Bloque][4] = Bloque; //Cambia etiqueta
     } else {
         for (int i = 0; i > 4; i++) {
             CACHE_DATOS_N1[Bloque][i] = MEM_DATOS[bloqueMem][i];
         }
-        CACHE_DATOS_N1[Bloque][5] = Bloque; //Cambia etiqueta
+        CACHE_DATOS_N1[Bloque][4] = Bloque; //Cambia etiqueta
     }
 };
 
@@ -62,7 +61,6 @@ void posCacheAMemDatos(int nucleo, int Bloque) {
 };
 
 //Copiar un bloque de memoria a la Cache de Instrucciones
-
 void posMemoriaACacheInstrucciones(int nucleo, int BloqueMem) {
     int bloqueCache = BloqueMem % 4;
 
@@ -78,7 +76,7 @@ void posMemoriaACacheInstrucciones(int nucleo, int BloqueMem) {
 };
 
 int getDatoCache(int nucleo, int bloque, int palabra) {
-    if (nucleo = 0) {
+    if (nucleo == 0) {
         return CACHE_DATOS_N0[bloque][palabra];
     } else {
         return CACHE_DATOS_N1[bloque][palabra];
@@ -86,7 +84,7 @@ int getDatoCache(int nucleo, int bloque, int palabra) {
 };
 
 void setDatoCache(int nucleo, int bloque, int palabra, int nuevo) {
-    if (nucleo = 0) {
+    if (nucleo == 0) {
         CACHE_DATOS_N0[bloque][palabra] = nuevo;
     } else {
         CACHE_DATOS_N1[bloque][palabra] = nuevo;
@@ -99,6 +97,14 @@ void setDatoMem(int direccion, int nuevo) {
     int Palabra = (direccion%16)/4;
     MEM_DATOS[Bloque][Palabra] = nuevo;
 };
+
+void setEstadoBloque(int nucleo, int bloque, int estado){
+if (nucleo == 0) {
+        CACHE_DATOS_N0[bloque][5] = estado;
+    } else {
+        CACHE_DATOS_N1[bloque][5] = estado;
+    }
+}
 
 //Estado de cada hilo
 struct estadoHilo {
