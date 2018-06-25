@@ -21,6 +21,7 @@ int CACHE_INSTRUCCIONES_N1[16][5]; //4 Bloques de 4 instrucciones + Etiqueta
 int CACHE_DATOS_N0[8][6]; //Bloques de 4 numeros + Etiqueta y Estado
 int CACHE_DATOS_N1[4][6]; //Bloques de 4 numeros + Etiqueta y Estado
 
+//Estructura 
 //Pila de hilillos
 stack<Hilillo> M_PilaHilillos;
 
@@ -137,8 +138,8 @@ void leerArchivo(string nombre) {
         indiceInstrucciones++;
     }
 };
-//Metodo definido para inicializar todas las matrices 
 
+//Metodo definido para inicializar todas las matrices 
 void inicializar() {
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 16; j++) {
@@ -222,10 +223,7 @@ void* correrHilillos(void*) {
 }
 
 int main() {
-    //Inicializa todas las matrices 
-    //Estructura 
-    //Pila de hilillos
-    stack<Hilillo> M_PilaHilillos;
+
     //Estado del hilo
     estadoHilo m_EstadoHilo;
     //Se llena pila de Hilillos
