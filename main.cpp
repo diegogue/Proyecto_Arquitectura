@@ -46,7 +46,6 @@ void posMemoriaACacheDatos(int nucleo, int Bloque) {
 };
 
 //Copiar un bloque de la Cache de datos a Memoria
-
 void posCacheAMemDatos(int nucleo, int Bloque) {
     int bloque = Bloque % 4;
 
@@ -110,10 +109,8 @@ struct estadoHilo {
     int estado = 0;
 };
 
-
 //Leer archivos de texto y convierte los numeros a enteros
 int indiceInstrucciones = 0; //Para guardar en la mem de Instrucciones
-
 void leerArchivo(string nombre) {
     ifstream file(nombre);
     string temp;
@@ -179,10 +176,7 @@ void inicializar() {
     }
 }
 
-
-
 //Instrucciones
-
 void DADDI(int nucleo, int X, int Y, int num) {
 };
 
@@ -229,7 +223,6 @@ void* correrHilillos(void*) {
 }
 
 int main() {
-
     //Inicializa todas las matrices 
     //Estructura 
     //Pila de hilillos
