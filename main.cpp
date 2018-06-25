@@ -77,7 +77,6 @@ void posMemoriaACacheInstrucciones(int nucleo, int BloqueMem) {
 };
 
 int getDatoCache(int nucleo, int bloque, int palabra) {
-
     if (nucleo = 0) {
         return CACHE_DATOS_N0[bloque][palabra];
     } else {
@@ -100,7 +99,7 @@ void setDatoMem(int direccion, int nuevo) {
     MEM_DATOS[Bloque][Palabra] = nuevo;
 };
 
-
+//Estado de cada hilo
 struct estadoHilo {
     int ID;
     //false=viejo, true=nuevo
